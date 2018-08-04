@@ -1,28 +1,60 @@
+/*
+ Public subnet
+*/
+resource "aws_subnet" "public_subnet_1" {
+  vpc_id                  = "${aws_vpc.vpc.id}"
+  cidr_block              = "${lookup(var.public_subnet_cidr_block, "subnet_1")}"
+  availability_zone       = "${lookup(var.availability_zone, "subnet_1")}"
+  map_public_ip_on_launch = true
 
-resource "aws_subnet" "public_web" {
-    vpc_id                  = "${aws_vpc.tf_vpc.id}"
-    cidr_block              = "10.0.0.0/24"
-    availability_zone       = "ap-northeast-1a"
-    map_public_ip_on_launch = true
-    tags {
-        Name = "tf_public_web"
-    }
+  tags {
+    Name    = "${var.service}-${var.env}-public-1"
+    service = "${var.service}"
+    env     = "${var.env}"
+    tfstate = "${var.tfstate}"
+  }
 }
 
-resource "aws_subnet" "private_db1" {
-    vpc_id            = "${aws_vpc.tf_vpc.id}"
-    cidr_block        = "10.0.1.0/24"
-    availability_zone = "ap-northeast-1a"
-    tags {
-        Name = "tf_private_db1"
-    }
+resource "aws_subnet" "public_subnet_2" {
+  vpc_id                  = "${aws_vpc.vpc.id}"
+  cidr_block              = "${lookup(var.public_subnet_cidr_block, "subnet_2")}"
+  availability_zone       = "${lookup(var.availability_zone, "subnet_2")}"
+  map_public_ip_on_launch = true
+
+  tags {
+    Name    = "${var.service}-${var.env}-public-2"
+    service = "${var.service}"
+    env     = "${var.env}"
+    tfstate = "${var.tfstate}"
+  }
+}
+/*
+ Private subnet
+*/
+resource "aws_subnet" "private_subnet_1" {
+  vpc_id                  = "${aws_vpc.vpc.id}"
+  cidr_block              = "${lookup(var.private_subnet_cidr_block, "subnet_1")}"
+  availability_zone       = "${lookup(var.availability_zone, "subnet_1")}"
+  map_public_ip_on_launch = false
+
+  tags {
+    Name    = "${var.service}-${var.env}-private-1"
+    service = "${var.service}"
+    env     = "${var.env}"
+    tfstate = "${var.tfstate}"
+  }
 }
 
-resource "aws_subnet" "private_db2" {
-    vpc_id            = "${aws_vpc.tf_vpc.id}"
-    cidr_block        = "10.0.2.0/24"
-    availability_zone = "ap-northeast-1c"
-    tags {
-        Name = "tf_private_db2"
-    }
+resource "aws_subnet" "private_subnet_2" {
+  vpc_id                  = "${aws_vpc.vpc.id}"
+  cidr_block              = "${lookup(var.private_subnet_cidr_block, "subnet_2")}"
+  availability_zone       = "${lookup(var.availability_zone, "subnet_2")}"
+  map_public_ip_on_launch = false
+
+  tags {
+    Name    = "${var.service}-${var.env}-private-2"
+    service = "${var.service}"
+    env     = "${var.env}"
+    tfstate = "${var.tfstate}"
+  }
 }
